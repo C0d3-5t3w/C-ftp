@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 3.10)
+project(C_ftp C)
+
+set(CMAKE_C_STANDARD 99)
+
+# Check for POSIX compliance
+if(UNIX)
+    add_definitions(-D_POSIX_C_SOURCE=200809L)
+endif()
+
+# Source files
+set(SOURCE_FILES
+    src/main.c
+    src/ftp.c
+)
+
+# Include directories
+include_directories(src)
+
+# Create executable
+add_executable(ftpserver ${SOURCE_FILES})
+
+# Link with necessary libraries
+if(UNIX)
+    target_link_libraries(ftpserver pthread)
+endif()
+
+# Install target
+install(TARGETS ftpserver DESTINATION bin)
